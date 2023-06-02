@@ -1,13 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public int score = 0;
+
+    public Text scoreText;
+
+ 
+
     private float horizontalInput;
     [SerializeField] private float speed;
     [SerializeField] private float xRange;
     [SerializeField] private GameObject projectilePrefab;//食べ物プレハブ（あとで複製）
+
+
+    void Start()
+    {
+     SetCountText(0);//初期化   
+    }
+
     void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
@@ -24,12 +38,23 @@ public class PlayerController : MonoBehaviour
                                                 transform.position.z);
         }
         //スペースキーが押されたら
-        if(Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
             //ここで食べ物を複製する（この使い方、というかメソッド名覚えて！）
-            Instantiate(    projectilePrefab, 
+            Instantiate(projectilePrefab,
                             transform.position,
                             projectilePrefab.transform.rotation);
         }
+    }
+   
+
+
+    public void SetCountText(int point)
+    {
+        score += point;//動物からもらったポイントを自分のスコアに加算
+
+        scoreText.text = "Count: " + score.ToString();
+
 
     }
 }
